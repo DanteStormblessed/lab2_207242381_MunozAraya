@@ -1,14 +1,5 @@
-/*
-integer(Code),atom(Message),integer(ChatbotCodeLink),integer(InitialFlowCL), is_list(Keyword),
-*/
-%TDA Option
-option(Code, Message, ChatbotCodeLink, InitialFlowCL, Keyword, Option) :-
-    Option = [Code, Message, ChatbotCodeLink, InitialFlowCL, Keyword].
+% Nombre: Alvaro Muñoz Araya
+% Rut: 20.724.238-1
 
-
-
-%TDA Flow
-flow(Id, Name-msg, Option, Flow) :-
-    Flow = [Id, Name-msg, Option].
-
-
+:-use_module(tdaoption_207242381_MunozAraya).
+:-use_module(tdaflow_207242381_MunozAraya).
