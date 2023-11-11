@@ -3,3 +3,4 @@
 
 :-use_module(tdaoption_207242381_MunozAraya).
 :-use_module(tdaflow_207242381_MunozAraya).
+:-use_module(tdachatbot_207242381_MunozAraya).
