@@ -2,7 +2,7 @@
 % Rut: 20.724.238-1
 
 
-:-module(tdaflow_207242381_MunozAraya, [flow/4, flowAddOption/3, flowGetOptions/2, flowGetMensagge/2, isFlow/1, getFlowId/2, concatenar/3]).
+:-module(tdaflow_207242381_MunozAraya, [flow/4, flowAddOption/3, flowGetOptions/2, flowGetMensagge/2, isFlow/1, getFlowId/2]).
 
 :-use_module(tdaoption_207242381_MunozAraya).
 
@@ -40,6 +40,3 @@ getFlowId([Id,Namemsg,Option], Id):-
 
 
 
-concatenar([], Lista, Lista).
-concatenar([Cabeza|Cola1], Lista2, [Cabeza|Resultado]) :-
-    concatenar(Cola1, Lista2, Resultado).
