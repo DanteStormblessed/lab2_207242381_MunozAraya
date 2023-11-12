@@ -1,20 +1,26 @@
 % Nombre: Alvaro Muñoz Araya
 % Rut: 20.724.238-1
 
-:-module(tdasystem_207242381_MunozAraya, [system/4, systemAddChatbot/3, systemAddUser/3, systemLogin/3, isSystem/1, isUser/1, getSystemName/2, getSystemInitialChatbotCL/2, getSystemChatbolList/2, getSystemUser/2, getSystemChatHistory/2, getSystemUsersList/2]).
+:-module(tdasystem_207242381_MunozAraya, [system/4, systemAddChatbot/3, systemAddUser/3, systemLogin/3, systemLogout/2, isSystem/1, isUser/1, getSystemName/2, getSystemInitialChatbotCL/2, getSystemChatbolList/2, getSystemUser/2, getSystemChatHistory/2, getSystemUsersList/2]).
 :-use_module(tdachatbot_207242381_MunozAraya).
 
 % TDA system
 
+% _______________________CONSTRUCTOR_______________________
+
+% Descripcion: crea un sistema en formato lista
+% Metas primarias: system
+% Metas secundarias: string, number
 system(NameSys, InitialChatbotCL, ChatbotList, System):-
     string(NameSys),
     number(InitialChatbotCL),
-
+    no_repetidos(ChatbotList),
     System = [NameSys, InitialChatbotCL, ChatbotList, [], [], []].
 
-
-
-
+% _______________________MODIFICADOR_______________________
+% Descripcion: Añade un chatbot al sistema
+% Metas primarias: systemAddChatbot
+% Metas secundarias: getSystemName, getSystemInitialChatbotCL, getSystemChatbolList, getSystemUser, getSystemChatHistory, getSystemUsersList, concatenar
 systemAddChatbot(System, Chatbot, NewSystem):-
     getSystemName(System, NameSys),
     getSystemInitialChatbotCL(System, InitialChatbotCL),
@@ -22,9 +28,14 @@ systemAddChatbot(System, Chatbot, NewSystem):-
     getSystemUser(System, User),
     getSystemChatHistory(System, ChatHistory),
     getSystemUsersList(System, UsersList),
+    not_member(Chatbot, ChatbotList),
     concatenar(ChatbotList, Chatbot, NewChatbotList),
     NewSystem = [NameSys, InitialChatbotCL, NewChatbotList, User, ChatHistory, UsersList].
 
+
+% Descripcion: Añade un usuario al sistema
+% Metas primarias: systemAddUser
+% Metas secundarias: getSystemName, getSystemInitialChatbotCL, getSystemChatbolList, getSystemUser, getSystemChatHistory, getSystemUsersList, concatenar
 systemAddUser(System, NewUser, NewSystem):-
     getSystemName(System, NameSys),
     getSystemInitialChatbotCL(System, InitialChatbotCL),
@@ -35,6 +46,9 @@ systemAddUser(System, NewUser, NewSystem):-
     concatenar(UsersList, NewUser, NewUsersList),
     NewSystem = [NameSys, InitialChatbotCL, ChatbotList, User, ChatHistory, NewUsersList].
 
+% Descripcion: Logea a un usuario en un sistema, es decir lo añade en User
+% Metas primarias: systemLogin
+% Metas secundarias: getSystemName, getSystemInitialChatbotCL, getSystemChatbolList, getSystemUser, getSystemChatHistory, getSystemUsersList, concatenar, isSystem
 systemLogin(System, NewUser, NewSystem):-
     getSystemName(System, NameSys),
     getSystemInitialChatbotCL(System, InitialChatbotCL),
@@ -46,31 +60,90 @@ systemLogin(System, NewUser, NewSystem):-
     isSystem([NameSys, InitialChatbotCL, ChatbotList, LogedUser, ChatHistory, UsersList]),
     NewSystem = [NameSys, InitialChatbotCL, ChatbotList, LogedUser, ChatHistory, UsersList].
 
+% Descripcion: Deslogea a un usuario en un sistema, es decir lo quita de User
+% Metas primarias: systemLogout
+% Metas secundarias: getSystemName, getSystemInitialChatbotCL, getSystemChatbolList, getSystemUser, getSystemChatHistory, getSystemUsersList, length, isSystem
+systemLogout(System, NewSystem):-
+    getSystemName(System, NameSys),
+    getSystemInitialChatbotCL(System, InitialChatbotCL),
+    getSystemChatbolList(System, ChatbotList),
+    getSystemUser(System, User),
+    getSystemChatHistory(System, ChatHistory),
+    getSystemUsersList(System, UsersList),
+    length(User,1),
+    isSystem([NameSys, InitialChatbotCL, ChatbotList, [], ChatHistory, UsersList]),
+    NewSystem = [NameSys, InitialChatbotCL, ChatbotList, [], ChatHistory, UsersList].
 
+
+% chatHistory(System, Message, List):-
+
+% systemTalkRec(System, User, NewSystem):-
+    % getSystemName(System, NameSys),
+    % getSystemInitialChatbotCL(System, InitialChatbotCL),
+    % getSystemChatbolList(System, ChatbotList),
+    % getSystemUser(System, User),
+    % getSystemChatHistory(System, ChatHistory),
+    % getSystemUsersList(System, UsersList),
+    % length(User,1),
+    % (;)
+
+
+
+
+
+% _______________________PERTENENCIA_______________________
+
+
+% Descripcion: Verifica si es un sistema
+% Metas primarias: isSystem
+% Metas secundarias: system, isUser, is_list, is_list
 isSystem([NameSys, InitialChatbotCL, ChatbotList, User, ChatHistory, UsersList]):-
     system(NameSys, InitialChatbotCL, ChatbotList, [NameSys, InitialChatbotCL, ChatbotList,_,_,_]),
     isUser(User),
     is_list(ChatHistory),
     is_list(UsersList).
 
+% Descripcion: Verifica si es User
+% Metas primarias: isUser
+% Metas secundarias: length
 isUser(User):-
     (length(User,0);length(User,1)).
 
+% _______________________SELECTOR_______________________
+
+% Descripcion: Obtiene el Nombre de un sistema
+% Metas primarias: getSystemName
+% Metas secundarias: isSystem
 getSystemName([NameSys, InitialChatbotCL, ChatbotList, User, ChatHistory, UsersList], NameSys):-
     isSystem([NameSys, InitialChatbotCL, ChatbotList, User, ChatHistory, UsersList]).
 
+% Descripcion: Obtiene el Initial Chatbot Code Link de un sistema
+% Metas primarias: getSystemInitialChatbotCL
+% Metas secundarias: isSystem
 getSystemInitialChatbotCL([NameSys, InitialChatbotCL, ChatbotList, User, ChatHistory, UsersList], InitialChatbotCL):-
     isSystem([NameSys, InitialChatbotCL, ChatbotList, User, ChatHistory, UsersList]).
 
+% Descripcion: Obtiene la lista de chatbots de un sistema
+% Metas primarias: getSystemChatbolList
+% Metas secundarias: isSystem
 getSystemChatbolList([NameSys, InitialChatbotCL, ChatbotList, User, ChatHistory, UsersList], ChatbotList):-
     isSystem([NameSys, InitialChatbotCL, ChatbotList, User, ChatHistory, UsersList]).
 
+% Descripcion: Obtiene el Usuario logeado de un sistema
+% Metas primarias: getSystemUser
+% Metas secundarias: isSystem
 getSystemUser([NameSys, InitialChatbotCL, ChatbotList, User, ChatHistory, UsersList], User):-
     isSystem([NameSys, InitialChatbotCL, ChatbotList, User, ChatHistory, UsersList]).
 
+% Descripcion: Obtiene el chat history de un sistema
+% Metas primarias: getSystemChatHistory
+% Metas secundarias: isSystem
 getSystemChatHistory([NameSys, InitialChatbotCL, ChatbotList, User, ChatHistory, UsersList], ChatHistory):-
     isSystem([NameSys, InitialChatbotCL, ChatbotList, User, ChatHistory, UsersList]).
 
+% Descripcion: Obtiene la listad de usuarios creados en un sistema
+% Metas primarias: getSystemUsersList
+% Metas secundarias: isSystem
 getSystemUsersList([NameSys, InitialChatbotCL, ChatbotList, User, ChatHistory, UsersList], UsersList):-
     isSystem([NameSys, InitialChatbotCL, ChatbotList, User, ChatHistory, UsersList]).
 
