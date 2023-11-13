@@ -2,13 +2,13 @@
 % Rut: 20.724.238-1
 
 
-:-module(tdaflow_207242381_MunozAraya, [flow/4, flowAddOption/3, flowGetOptions/2, flowGetMensagge/2, isFlow/1, getFlowId/2, no_repetidos/1, not_member/2]).
+:-module(tdaflow_207242381_MunozAraya, [flow/4, flowAddOption/3, flowGetOptions/2, flowGetMessage/2, isFlow/1, getFlowId/2, no_repetidos/1, not_member/2]).
 :-use_module(tdaoption_207242381_MunozAraya).
 
 % _______________________CONSTRUCTOR_______________________
 
 % Descripcion: Crea un flow en formato de lista
-% Metas primarias: flows
+% Metas primarias: flow
 % Metas secundarias: number, string
 flow(Id,Namemsg,Option,Flow):-
     number(Id),
@@ -20,10 +20,10 @@ flow(Id,Namemsg,Option,Flow):-
 
 % Descripcion: Añade una opcion al flow
 % Metas primarias: flowAddOption
-% Metas secundarias: getFlowId, flowGetMensagge, flowGetOptions, concatenar
+% Metas secundarias: getFlowId, flowGetMessage, flowGetOptions, concatenar, not_member
 flowAddOption(Flow, Option, NewFlow):-
     getFlowId(Flow, Id),
-    flowGetMensagge(Flow, Namemsg),
+    flowGetMessage(Flow, Namemsg),
     flowGetOptions(Flow, Options),
     not_member(Option, Options),
     concatenar(Options, Option, NewOptionList),
@@ -38,9 +38,9 @@ flowGetOptions([Id,Namemsg,Option],Option):-
     isFlow([Id,Namemsg,Option]).
 
 % Descripcion: Obtiene el mensaje de un flow
-% Metas primarias: flowGetMensagge
+% Metas primarias: flowGetMessage
 % Metas secundarias: isFlow
-flowGetMensagge([Id,Namemsg,Option],Namemsg):-
+flowGetMessage([Id,Namemsg,Option],Namemsg):-
     isFlow([Id,Namemsg,Option]).
 
 % Descripcion: Obtiene el Id de un flow

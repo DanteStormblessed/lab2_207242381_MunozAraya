@@ -11,6 +11,5 @@ system-add-user		            1
 system-login	                    1
 system-logout		            1
 system-talk-rec	                  0.25
-system-talk-norec		  0.25
-system-synthesis	           0.5
-system-simulate			  0.25
+system-synthesis	            0
+system-simulate			    0
