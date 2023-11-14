@@ -39,7 +39,7 @@ test:-
     systemLogin(S5, "user1", S7),
     systemLogout(S7, S9),
     systemLogin(S9, "user2", S10),
-    /* systemTalkRec systemSynthesis y systemSimulate presentan problemas de implementacion es por eso que estan comentados
+    /* systemTalkRec systemSynthesis y systemSimulate presentan problemas de implementacion es por ello que se encuentran comentados
     systemTalkRec(S10, "hola", S11),
     systemTalkRec(S11, "1", S12),
     systemTalkRec(S12, "1", S13),
@@ -87,7 +87,7 @@ test:-
     write("S9= "),write(S9), write("\n"),
     write("S10= "),write(S10), write("\n").
 
-/* descomentar si se desea probar otro script, tambien puede copiar el script y probarlo consultando en el main
+/*descomentar si se desea probar otro script, tambien puede copiar el script y probarlo consultando el archivo "main.pl"
 test2:-
     option(1, "1) Buscar peliculas", 1, 1, ["peliculas", "pelis", "movies"], OP1),
     option(2, "2) Buscar videojuegos", 2, 1, ["juegos", "videojuegos", "jugar"], OP2),
@@ -119,12 +119,15 @@ test2:-
     system("Chatbots Paradigmas", 0, [CB0], S0),
     systemAddChatbot(S0, CB1, S01),
     systemAddChatbot(S01, CB2, S02),
-    systemAddUser(S02, "user1", S2),
-    systemAddUser(S2, "user2", S3),
-    systemAddUser(S3, "user3", S5),
-    systemLogin(S5, "user1", S7),
+    systemAddUser(S02, "usuario 1", S2),
+    systemAddUser(S2, "usuario 2", S3),
+    systemAddUser(S3, "usuario 3", S5),
+    systemLogin(S5, "usuario 1", S7),
     systemLogout(S7, S9),
-    systemLogin(S9, "user2", S10),
+    systemLogin(S9, "usuario 2", S10),
+    systemLogout(S10, S11),
+    systemLogin(S11, "usuario 3", S12),
+    systemLogout(S12, S13),
     write("OP1= "),write(OP1), write("\n"),
     write("OP2= "),write(OP2), write("\n"),
     write("F10= "),write(F10), write("\n"),
@@ -160,5 +163,8 @@ test2:-
     write("S5= "),write(S5), write("\n"),
     write("S7= "),write(S7), write("\n"),
     write("S9= "),write(S9), write("\n"),
-    write("S10= "),write(S10), write("\n").
+    write("S10= "),write(S10), write("\n"),
+    write("S11= "),write(S11), write("\n"),
+    write("S12= "),write(S12), write("\n"),
+    write("S13= "),write(S13), write("\n").
 */
